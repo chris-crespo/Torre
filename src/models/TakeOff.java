@@ -1,3 +1,3 @@
 package models;
 
-public record TakeOff() implements Operation {}
+public record TakeOff(String time, Plane plane) implements Operation {}

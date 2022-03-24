@@ -1,5 +1,9 @@
+package adt.tests;
+
 import org.junit.*;
 import static org.junit.Assert.*;
+
+import adt.Queue;
 
 public class QueueTest {
     @Test

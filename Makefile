@@ -10,5 +10,5 @@ clean:
 	rm -rf class/*
 
 test: src/*.java test/*.java
-	javac {src,test}/**/*.java -d class -cp lib/junit.jar
+	javac {src,src/**,test}/*.java -d class -cp lib/junit.jar
 	java -jar lib/junit.jar -cp class/ --scan-classpath
