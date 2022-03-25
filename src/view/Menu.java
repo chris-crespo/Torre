@@ -21,7 +21,7 @@ public class Menu extends Frame {
         this.control = control;
         this.options = new LinkedHashMap<>() {{
             put("Solicitud de permiso para aterrizar", e -> showLandingForm());
-            put("Solicitud de permiso para despegar",  e -> control.takeOff());
+            put("Solicitud de permiso para despegar",  e -> showTakeOffForm());
             put("Autorizar operación",                 e -> auth());
         }};
 
@@ -38,6 +38,10 @@ public class Menu extends Frame {
 
     private void showLandingForm() {
         new LandingForm(control);  
+    }
+
+    private void showTakeOffForm() {
+        new TakeOffForm(control);
     }
 
     private void auth() {

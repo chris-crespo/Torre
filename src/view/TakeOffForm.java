@@ -7,8 +7,8 @@ import java.awt.*;
 import models.SpecialCause;
 import app.Control;
 
-public class LandingForm extends Frame {
-    public LandingForm(Control control) {
+public class TakeOffForm extends Frame {
+    public TakeOffForm(Control control) {
         super();
         
         withPanel(this::build);
@@ -20,11 +20,9 @@ public class LandingForm extends Frame {
 
         addLabel(panel, "Código avión", 0);
         addInput(panel, 0);
-        addLabel(panel, "Procedencia", 1);
+        addLabel(panel, "Destino", 1);
         addInput(panel, 1);
-        addLabel(panel, "Motivo", 2);
-        addDropdown(panel, SpecialCause.names(), 2);
-        addButton(panel, "Ok", 3);
+        addButton(panel, "Ok", 2);
     }
 
     private void addLabel(JPanel panel, String text, int row) {

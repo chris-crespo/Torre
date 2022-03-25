@@ -1,22 +1,44 @@
 package view;
 
-import java.util.function.Consumer;
+import java.util.function.*;
 import javax.swing.*;
 
 public class Form extends Frame {
-    private JPanel panel;
+    HashMap<String, JTextField> inputs;
+    HashMap<String, JComboBox>  dropdowns;
+    HashMap<String, JButton>    buttons;
 
-    public Form() { super(); }
+    private int rows;
 
-    void setPanel(JPanel panel) {
-        this.panel = panel;
+    public Form(Function<Form, Consumer<Panel>> builder) {
+        super();
+
+        this.inputs    = new HashMap<>();
+        this.dropdowns = new HashMap<>();
+        this.buttons   = new HashMap<>();
+
+        this.rows = 0;
+
+        withPanel(builder.apply(this));
     }
 
-    void addInput(String name) {
-        var label = new JLabel(name); 
-        panel.add(label);
+    void addField(JPanel panel, String name) {
+        var label = createLabel(name);
+        var input = createInput();
 
-        var input = new JTextField();
+        inputs.put(name, input);
+        panel.add(label);
         panel.add(input);
     }
+
+    void addField(JPanel panel, String name, String[] options) {
+        var label = createLabel(name);
+        var dropdown = createDropdown(options);
+
+        dropdowns.add(name, dropdown);
+        panel.add(label);
+        panel.add(input);
+    }
+
+
 }

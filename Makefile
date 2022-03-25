@@ -3,7 +3,7 @@
 all: clean run
 
 run: src/*.java
-	javac {src/**,src}/*.java -d class 
+	javac {src/**,src}/*.java -d class -Xlint:unchecked
 	java -cp class Main
 
 clean: 
