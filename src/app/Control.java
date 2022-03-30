@@ -1,5 +1,6 @@
 package app;
 
+import java.util.Date;
 import java.util.Optional;
 
 import view.*;
@@ -12,12 +13,12 @@ public class Control {
         this.operations = new Operations();
     }
 
-    public void takeOff() {
+    public void requestTakeOff() {
         
     }
 
-    public void land() {
-
+    public void requestLanding(String planeCode, String origin, Date date) {
+        System.out.printf("%s %s\n", planeCode, origin);
     }
 
     public boolean auth() {
