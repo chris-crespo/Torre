@@ -25,8 +25,21 @@ public class LandingForm extends Form {
     }
 
     void onSubmit(ActionEvent e) {
-        var planeCode = inputs.get("Código avión").getText();
-        var origin = inputs.get("Procedencia").getText();
-        control.requestLanding(planeCode, origin, new Date());
+        var planeCodeField = inputs.get("Código avión");
+        var planeCode = planeCodeField.getText();
+        if (planeCode == "") {
+            planeCodeField.invalid();
+            return;
+        }
+
+        var originField = inputs.get("Procedencia");
+        var origin = originField.getText();
+        if (origin == "") {
+            originField.invalid();
+            return;
+        }
+
+        var cause = (String) dropdowns.get("Motivo").getSelectedItem();
+        control.requestLanding(planeCode, new Date(), origin, SpecialCause.from(cause));
     }
 }

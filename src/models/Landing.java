@@ -1,3 +1,8 @@
 package models;
 
-public record Landing(String time, Plane plane) implements Operation {}
+import java.util.Date;
+
+public record Landing(String planeCode, Date date, String origin, SpecialCause cause) 
+        implements Operation {
+
+}

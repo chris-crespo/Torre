@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import view.*;
 import adt.*;
+import models.*;
 
 public class Control {
     private Operations operations;
@@ -17,7 +18,7 @@ public class Control {
         
     }
 
-    public void requestLanding(String planeCode, String origin, Date date) {
+    public void requestLanding(String planeCode, Date date, String origin, SpecialCause cause) {
         System.out.printf("%s %s\n", planeCode, origin);
     }
 

@@ -1,3 +1,7 @@
 package models;
 
-public record TakeOff(String time, Plane plane) implements Operation {}
+import java.util.Date;
+
+public record TakeOff(String planeCode, Date date, String destination) 
+        implements Operation {
+}
