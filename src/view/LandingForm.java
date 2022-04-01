@@ -26,6 +26,7 @@ public class LandingForm extends Form {
 
     void onSubmit(ActionEvent e) {
         var planeCodeField = inputs.get("Código avión");
+        System.out.println(planeCodeField);
         var planeCode = planeCodeField.getText();
         if (planeCode == "") {
             planeCodeField.invalid();

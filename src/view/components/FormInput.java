@@ -18,6 +18,6 @@ public class FormInput extends JTextField {
     }
 
     public void invalid() {
-        setBorder(new LineBorder(Color.Red, 1));
+        setBorder(new LineBorder(Color.red, 1));
     }
 }
