@@ -14,8 +14,10 @@ public class Control {
         this.operations = new Operations();
     }
 
-    public void requestTakeOff() {
-        
+    public void requestTakeOff(String planeCode, Date date, String destination) {
+        var takeOff = new TakeOff(planeCode, date, destination);
+        operations.add(takeOff);
+        new Menu(this);
     }
 
     public void requestLanding(String planeCode, Date date, String origin, SpecialCause cause) {

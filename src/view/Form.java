@@ -24,15 +24,19 @@ public abstract class Form extends Frame {
         this.dropdowns = new HashMap<>();
 
         this.rows = 0;
+
+        buildForm();
     }
 
-    void build(Consumer<JPanel> builder) {
+    protected abstract void build();
+
+    private void buildForm() {
         withPanel(panel -> {
             this.panel = panel;
             panel.setLayout(new GridBagLayout());
             panel.setBorder(new EmptyBorder(30, 44, 40, 44));
 
-            builder.accept(panel);
+            build();
 
             var submitButton = new FormSubmitButton(this::onSubmit);
             panel.add(submitButton, submitButton.constraints(rows));

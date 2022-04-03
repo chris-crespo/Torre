@@ -13,12 +13,10 @@ public class LandingForm extends Form {
     private Control control;
     public LandingForm(Control control) {
         super();
-        super.build(this::build);
-
         this.control = control;
     }
 
-    private void build(JPanel panel) {
+    protected void build() {
         addField("Código avión");
         addField("Procedencia");
         addField("Motivo", SpecialCause.names());
@@ -34,9 +32,12 @@ public class LandingForm extends Form {
             return;
 
         var planeCode = planeCodeField.getText();
-        var origin = originField.getText();
-        var cause = (String) dropdowns.get("Motivo").getSelectedItem();
+        var origin    = originField.getText();
+        var cause     = (String) dropdowns.get("Motivo").getSelectedItem();
 
         control.requestLanding(planeCode, new Date(), origin, SpecialCause.from(cause));
+
+        new Menu(control);
+        dispose();
     }
 }
