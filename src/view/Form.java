@@ -11,8 +11,8 @@ import java.awt.event.*;
 import components.*;
 
 public abstract class Form extends Frame {
-    HashMap<String, JTextField> inputs;
-    HashMap<String, JComboBox>  dropdowns;
+    HashMap<String, FormInput> inputs;
+    HashMap<String, FormDropdown>  dropdowns;
 
     private JPanel panel;
     private int rows;
