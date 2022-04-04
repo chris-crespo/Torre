@@ -7,8 +7,19 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class FormInput extends JTextField {
+    private boolean required;
+    private Predicate<String> validator;
+
     public FormInput() {
+        this(t -> true);
+    }
+
+    public FormInput(Predicate<String> validator) {
         super();
+
+        this.validator = validator;
+        this.required  = false;
+
         setPreferredSize(new Dimension(180, 22));
         valid();
     }
@@ -20,21 +31,25 @@ public class FormInput extends JTextField {
         return constraints;
     }
 
-    private void valid() {
+    public void required() {
+        this.required = true;
+    }
+
+    private void setBlackBorder() {
         setBorder(new LineBorder(Color.black, 1));
     }
 
-    private void invalid() {
+    private void setRedBorder() {
         setBorder(new LineBorder(Color.red, 1));
     }
 
-    public boolean validate(Predicate<String> pred) {
-        if (!pred.test(getText())) {
-            invalid();
-            return false;
-        }
+    public boolean valid() {
+        var text = getText();
+        var valid = (!required || text.length() != 0) && validator.test(text);
 
-        valid();
-        return true;
+        if (!valid) setRedBorder();
+        else setBlackBorder();
+
+        return valid;
     }
 }

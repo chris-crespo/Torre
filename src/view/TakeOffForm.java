@@ -18,25 +18,16 @@ public class TakeOffForm extends Form {
     }
 
     protected void build() {
-        addField("Código avión");
-        addField("Destino");
+        addRequiredField("Código avión");
+        addRequiredField("Destino");
     }
 
     void onSubmit(ActionEvent e) {
-        var planeCodeField = inputs.get("Código avión");
-        if (!planeCodeField.validate(t -> t.length() > 0))
-            return;
-
-        var destinationField = inputs.get("Destino");
-        if (!destinationField.validate(t -> t.length() > 0))
-            return;
-
-        var planeCode   = planeCodeField.getText();
-        var destination = destinationField.getText();
+        var planeCode   = inputs.get("Código avión").getText();
+        var destination = inputs.get("Destino").getText();
 
         control.requestTakeOff(planeCode, new Date(), destination);
 
         new Menu(control);
-        dispose();
     }
 }

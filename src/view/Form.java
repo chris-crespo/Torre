@@ -1,6 +1,7 @@
 package view;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.*;
 
 import javax.swing.*;
@@ -38,14 +39,27 @@ public abstract class Form extends Frame {
 
             build();
 
-            var submitButton = new FormSubmitButton(this::onSubmit);
+            var submitButton = new FormSubmitButton(this::handleSubmit);
             panel.add(submitButton, submitButton.constraints(rows));
         });
     }
 
+    void addRequiredField(String name) {
+        addRequiredField(name, t -> true);
+    }
+
+    void addRequiredField(String name, Predicate<String> validator) {
+        addField(name, validator);
+        inputs.get(name).required();
+    }
+
     void addField(String name) {
+        addField(name, t -> true); 
+    }
+
+    void addField(String name, Predicate<String> validator) {
         var label = new FormLabel(name);
-        var input = new FormInput();
+        var input = new FormInput(validator);
 
         inputs.put(name, input);
         panel.add(label, label.constraints(rows));
@@ -59,6 +73,19 @@ public abstract class Form extends Frame {
         dropdowns.put(name, dropdown);
         panel.add(label, label.constraints(rows));
         panel.add(dropdown, dropdown.constraints(rows++));
+    }
+
+    private boolean valid() {
+        return inputs.entrySet().stream()
+            .map(Map.Entry::getValue)
+            .allMatch(FormInput::valid);
+    }
+
+    private void handleSubmit(ActionEvent e) {
+        if (valid()) {
+            onSubmit(e);
+            dispose();
+        }
     }
 
     abstract void onSubmit(ActionEvent e);
