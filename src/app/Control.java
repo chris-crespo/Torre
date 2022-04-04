@@ -9,9 +9,11 @@ import models.*;
 
 public class Control {
     private Operations operations;
+    private Operations emergencyLandings;
 
     public Control() {
-        this.operations = new Operations();
+        this.operations        = new Operations();
+        this.emergencyLandings = new Operations();
     }
 
     public void requestTakeOff(TakeOff takeOff) {
@@ -19,10 +21,11 @@ public class Control {
     }
 
     public void requestLanding(Landing landing) {
-        operations.add(landing);
+        var q = landing.cause() == SpecialCause.None ? operations : emergencyLandings;
+        q.add(landing);
     }
 
     public Optional<Operation> auth() {
-        return operations.next(); 
+        return emergencyLandings.next().or(operations::next);
     }
 }

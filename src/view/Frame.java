@@ -29,10 +29,7 @@ public class Frame extends JFrame {
     JButton createButton(String title, ActionListener cb) {
         var btn = new JButton();
         btn.setText(title);
-        btn.addActionListener(e -> {
-            dispose();
-            cb.actionPerformed(e);
-        });
+        btn.addActionListener(cb);
         btn.setAlignmentX(Component.CENTER_ALIGNMENT);
         btn.setFont(new Font("sans-serif", Font.PLAIN, 13));
         return btn;
