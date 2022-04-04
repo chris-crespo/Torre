@@ -27,7 +27,8 @@ public class LandingForm extends Form {
         var origin    = inputs.get("Procedencia").getText();
         var cause     = (String) dropdowns.get("Motivo").getSelectedItem();
 
-        control.requestLanding(planeCode, new Date(), origin, SpecialCause.from(cause));
+        control.requestLanding(
+            new Landing(planeCode, new Date(), origin, SpecialCause.from(cause)));
 
         new Menu(control);
     }

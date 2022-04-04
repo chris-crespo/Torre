@@ -46,9 +46,9 @@ public class Menu extends Frame {
 
     private void auth() {
         var authorized = control.auth(); 
-        if (authorized)
-            new AuthSuccess(control);
-        else 
-            new AuthFailure(control);
+        control.auth().ifPresentOrElse(
+            e -> {},
+            () -> {}
+        );
     }
 }

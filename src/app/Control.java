@@ -14,17 +14,15 @@ public class Control {
         this.operations = new Operations();
     }
 
-    public void requestTakeOff(String planeCode, Date date, String destination) {
-        var takeOff = new TakeOff(planeCode, date, destination);
+    public void requestTakeOff(TakeOff takeOff) {
         operations.add(takeOff);
-        new Menu(this);
     }
 
-    public void requestLanding(String planeCode, Date date, String origin, SpecialCause cause) {
-        System.out.printf("%s %s\n", planeCode, origin);
+    public void requestLanding(Landing landing) {
+        operations.add(landing);
     }
 
-    public boolean auth() {
-        return operations.next().isPresent();
+    public Optional<Operation> auth() {
+        return operations.next(); 
     }
 }

@@ -7,7 +7,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-import models.SpecialCause;
+import models.*;
 import app.Control;
 
 public class TakeOffForm extends Form {
@@ -26,7 +26,7 @@ public class TakeOffForm extends Form {
         var planeCode   = inputs.get("Código avión").getText();
         var destination = inputs.get("Destino").getText();
 
-        control.requestTakeOff(planeCode, new Date(), destination);
+        control.requestTakeOff(new TakeOff(planeCode, new Date(), destination));
 
         new Menu(control);
     }
