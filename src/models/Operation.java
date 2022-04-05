@@ -1,3 +1,7 @@
 package models;
 
-public sealed interface Operation permits TakeOff, Landing { }
+import models.view.*;
+
+public sealed interface Operation permits TakeOff, Landing { 
+    public OperationVM viewModel();
+}
