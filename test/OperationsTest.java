@@ -1,5 +1,7 @@
 package app.tests;
 
+import java.util.Date;
+
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -10,8 +12,8 @@ public class OperationsTest {
     @Test
     public void basicTest() {
         var ops = new Operations();
-        ops.add(new Landing());
-        ops.add(new TakeOff());
+        ops.add(new Landing("A", new Date(), "A", SpecialCause.None));
+        ops.add(new TakeOff("B", new Date(), "B"));
 
         var next = ops.next();
         assertTrue(next.isPresent());
@@ -25,9 +27,9 @@ public class OperationsTest {
     @Test
     public void intervealedTest() {
         var ops = new Operations();
-        ops.add(new Landing());
-        ops.add(new Landing());
-        ops.add(new TakeOff());
+        ops.add(new Landing("A", new Date(), "A", SpecialCause.None));
+        ops.add(new Landing("B", new Date(), "B", SpecialCause.None));
+        ops.add(new TakeOff("B", new Date(), "B"));
 
         var next = ops.next();
         assertTrue(next.isPresent());
