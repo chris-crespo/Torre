@@ -6,18 +6,18 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 import app.Control;
+import view.components.*;
 
 public class AuthFailure extends Frame {
     public AuthFailure() {
-        var panel = new JPanel();
+        withPanel(this::build);
+    }
+
+    protected void build(JPanel panel) {
         panel.setLayout(new GridLayout(2, 1, 10, 20));
         panel.setBorder(new EmptyBorder(30, 44, 40, 44));
 
-        panel.add(createLabel("Operación rechazada"));
-        panel.add(createButton("Ok", e -> dispose()));
-
-        add(panel);
-        pack();
-        setVisible(true);
+        panel.add(new Title("Operación rechazada"));
+        panel.add(new MenuButton("Ok", e -> dispose()));
     }
 }

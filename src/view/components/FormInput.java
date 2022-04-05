@@ -1,4 +1,4 @@
-package components;
+package view.components;
 
 import java.util.function.Predicate;
 

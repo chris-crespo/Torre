@@ -1,5 +1,6 @@
 package view;
 
+import java.util.function.*;
 import java.util.LinkedHashMap;
 
 import javax.swing.*;
@@ -8,6 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import app.Control;
+import view.components.*;
 
 public class Menu extends Frame {
     /* Usamos LinkedHashMap para preservar el orden en el que añadimos
@@ -16,7 +18,7 @@ public class Menu extends Frame {
     private LinkedHashMap<String, ActionListener> options;
 
     public Menu(Control control) {
-        super();
+        super(JFrame.EXIT_ON_CLOSE);
 
         this.control = control;
         this.options = new LinkedHashMap<>() {{
@@ -28,12 +30,12 @@ public class Menu extends Frame {
         withPanel(this::build);
     }
 
-    private void build(JPanel panel) {
+    protected void build(JPanel panel) {
         panel.setLayout(new GridLayout(4, 1, 10, 20));
         panel.setBorder(new EmptyBorder(30, 44, 40, 44));
 
-        panel.add(createLabel("Menú de Operaciones"));
-        options.forEach((title, cb) -> panel.add(createButton(title, cb)));
+        panel.add(new Title("Menú de Operaciones"));
+        options.forEach((title, cb) -> panel.add(new MenuButton(title, cb)));
     }
 
     private void showLandingForm() {
@@ -45,7 +47,6 @@ public class Menu extends Frame {
     }
 
     private void auth() {
-        var authorized = control.auth(); 
         control.auth().ifPresentOrElse(AuthdOpView::new, AuthFailure::new);
     }
 }

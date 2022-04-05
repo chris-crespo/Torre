@@ -6,10 +6,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class Frame extends JFrame {
+public abstract class Frame extends JFrame {
+    private static String title = "Torre de Control";
     public Frame() {
-        super("Torre de Control");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        super(title);
+    }
+
+    public Frame(int closeOp) {
+        super(title);
+        setDefaultCloseOperation(closeOp);
     }
 
     void withPanel(Consumer<JPanel> fn) {
@@ -20,18 +25,5 @@ public class Frame extends JFrame {
         setVisible(true);
     }
 
-    JLabel createLabel(String text) {
-        var label = new JLabel(text);
-        label.setFont(new Font("sans-serif", Font.BOLD, 22));
-        return label;
-    }
-
-    JButton createButton(String title, ActionListener cb) {
-        var btn = new JButton();
-        btn.setText(title);
-        btn.addActionListener(cb);
-        btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btn.setFont(new Font("sans-serif", Font.PLAIN, 13));
-        return btn;
-    }
+    protected abstract void build(JPanel panel);
 }

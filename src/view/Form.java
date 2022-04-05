@@ -1,6 +1,6 @@
 package view;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.*;
 
@@ -9,11 +9,11 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 
-import components.*;
+import view.components.*;
 
 public abstract class Form extends Frame {
-    HashMap<String, FormInput> inputs;
-    HashMap<String, FormDropdown>  dropdowns;
+    LinkedHashMap<String, FormInput> inputs;
+    LinkedHashMap<String, FormDropdown>  dropdowns;
 
     private JPanel panel;
     private int rows;
@@ -21,27 +21,25 @@ public abstract class Form extends Frame {
     public Form() {
         super();
 
-        this.inputs    = new HashMap<>();
-        this.dropdowns = new HashMap<>();
+        this.inputs    = new LinkedHashMap<>();
+        this.dropdowns = new LinkedHashMap<>();
 
         this.rows = 0;
 
-        buildForm();
+        withPanel(this::build);
     }
 
-    protected abstract void build();
+    protected abstract void buildForm();
 
-    private void buildForm() {
-        withPanel(panel -> {
-            this.panel = panel;
-            panel.setLayout(new GridBagLayout());
-            panel.setBorder(new EmptyBorder(30, 44, 40, 44));
+    protected void build(JPanel panel) {
+        this.panel = panel;
+        panel.setLayout(new GridBagLayout());
+        panel.setBorder(new EmptyBorder(30, 44, 40, 44));
 
-            build();
+        buildForm();
 
-            var submitButton = new FormSubmitButton(this::handleSubmit);
-            panel.add(submitButton, submitButton.constraints(rows));
-        });
+        var submitButton = new FormSubmitButton(this::handleSubmit);
+        panel.add(submitButton, submitButton.constraints(rows));
     }
 
     void addRequiredField(String name) {
@@ -78,7 +76,11 @@ public abstract class Form extends Frame {
     private boolean valid() {
         return inputs.entrySet().stream()
             .map(Map.Entry::getValue)
-            .allMatch(FormInput::valid);
+            /* Usamos map->reduce en vez de allMatch(FormInput::valid)
+             * para asegurarnos de que todos los elementos son validados
+             * y alteraros como corresponda */
+            .map(FormInput::valid)
+            .reduce(true, (acc, x) -> acc && x);
     }
 
     private void handleSubmit(ActionEvent e) {

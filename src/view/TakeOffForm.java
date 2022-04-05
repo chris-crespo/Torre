@@ -17,7 +17,7 @@ public class TakeOffForm extends Form {
         this.control = control;
     }
 
-    protected void build() {
+    protected void buildForm() {
         addRequiredField("Código avión");
         addRequiredField("Destino");
     }
@@ -27,7 +27,5 @@ public class TakeOffForm extends Form {
         var destination = inputs.get("Destino").getText();
 
         control.requestTakeOff(new TakeOff(planeCode, new Date(), destination));
-
-        new Menu(control);
     }
 }

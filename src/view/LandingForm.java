@@ -16,7 +16,7 @@ public class LandingForm extends Form {
         this.control = control;
     }
 
-    protected void build() {
+    protected void buildForm() {
         addRequiredField("Código avión");
         addRequiredField("Procedencia");
         addField("Motivo", SpecialCause.names());
@@ -29,7 +29,5 @@ public class LandingForm extends Form {
 
         control.requestLanding(
             new Landing(planeCode, new Date(), origin, SpecialCause.from(cause)));
-
-        new Menu(control);
     }
 }
