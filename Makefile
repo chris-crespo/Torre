@@ -6,8 +6,8 @@ files = $(shell find {src,test} -name "*.java")
 all: clean run
 
 run: src/*.java
-	javac $(sources) -d class -Xlint:unchecked
-	java -cp class Main
+	javac $(sources) -d class -Xlint:unchecked --enable-preview --release 17
+	java --enable-preview -cp class Main
 
 clean: 
 	rm -rf class/*

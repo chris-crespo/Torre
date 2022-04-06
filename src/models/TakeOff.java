@@ -1,12 +1,10 @@
 package models;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
-import models.view.*;
-
-public record TakeOff(String planeCode, Date date, String destination) 
+public record TakeOff(String planeCode, LocalDateTime date, String destination) 
         implements Operation {
-    public OperationVM viewModel() {
-        return new OperationVM(OperationKind.Despegue, "00:00 h", planeCode);
+    public String time() {
+        return String.format("%2d:%2d", date.getHour(), date.getMinute());
     }
 }

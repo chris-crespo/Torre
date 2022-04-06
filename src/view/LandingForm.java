@@ -1,6 +1,6 @@
 package view;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,6 +28,6 @@ public class LandingForm extends Form {
         var cause     = (String) dropdowns.get("Motivo").getSelectedItem();
 
         control.requestLanding(
-            new Landing(planeCode, new Date(), origin, SpecialCause.from(cause)));
+            new Landing(planeCode, LocalDateTime.now(), origin, SpecialCause.from(cause)));
     }
 }

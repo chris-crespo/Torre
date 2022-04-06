@@ -8,4 +8,13 @@ public class Title extends JLabel {
         super(text);
         setFont(new Font("sans-serif", Font.BOLD, 22));
     }
+
+    public GridBagConstraints constraints() {
+        var constraints = new GridBagConstraints();
+
+        constraints.insets = new Insets(0, 0, 20, 0);
+        constraints.anchor = GridBagConstraints.WEST;
+
+        return constraints;
+    }
 }

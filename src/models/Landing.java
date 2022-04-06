@@ -1,12 +1,10 @@
 package models;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
-import models.view.*;
-
-public record Landing(String planeCode, Date date, String origin, SpecialCause cause) 
+public record Landing(String planeCode, LocalDateTime date, String origin, SpecialCause cause) 
         implements Operation {
-    public OperationVM viewModel() {
-        return new OperationVM(OperationKind.Aterrizaje, "00:00 h", planeCode);
+    public String time() {
+        return String.format("%2d:%2d", date.getHour(), date.getMinute());
     }
 }

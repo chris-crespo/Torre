@@ -1,6 +1,6 @@
 package view;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -26,6 +26,6 @@ public class TakeOffForm extends Form {
         var planeCode   = inputs.get("Código avión").getText();
         var destination = inputs.get("Destino").getText();
 
-        control.requestTakeOff(new TakeOff(planeCode, new Date(), destination));
+        control.requestTakeOff(new TakeOff(planeCode, LocalDateTime.now(), destination));
     }
 }
