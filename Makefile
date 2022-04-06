@@ -6,8 +6,8 @@ files = $(shell find {src,test} -name "*.java")
 all: clean run
 
 run: src/*.java
-	javac $(sources) -d class -Xlint:unchecked --enable-preview --release 17
-	java --enable-preview -cp class Main
+	javac $(sources) -d class -cp lib/sqlite.jar -Xlint:unchecked --enable-preview --release 17
+	java --enable-preview -cp class:lib/sqlite.jar Main
 
 clean: 
 	rm -rf class/*
