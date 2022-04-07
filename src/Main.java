@@ -1,4 +1,5 @@
 import view.Menu;
+import view.ConnectionFailure;
 import app.Control;
 import data.Db;
 

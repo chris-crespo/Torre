@@ -6,12 +6,17 @@ import java.util.Optional;
 import view.*;
 import adt.*;
 import models.*;
+import data.Db;
 
 public class Control {
+    private Db db;
+
     private Operations operations;
     private Operations emergencyLandings;
 
-    public Control() {
+    public Control(Db db) {
+        this.db = db;
+
         this.operations        = new Operations();
         this.emergencyLandings = new Operations();
     }

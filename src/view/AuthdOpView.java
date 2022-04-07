@@ -2,9 +2,10 @@ package view;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import java.awt.GridBagLayout;
 
-import view.components.*;
+import view.components.Title;
+import view.components.Label;
 import models.*;
 
 public class AuthdOpView extends Frame {
@@ -41,8 +42,8 @@ public class AuthdOpView extends Frame {
     }
 
     private void addRow(String left, String right) {
-        var leftLabel  = new ViewLabel(left);
-        var rightLabel = new ViewLabel(right);
+        var leftLabel  = new Label(left);
+        var rightLabel = new Label(right);
 
         panel.add(leftLabel,  leftLabel.constraints(rows));
         panel.add(rightLabel, rightLabel.constraints(rows++));

@@ -3,9 +3,14 @@ package view.components;
 import javax.swing.*;
 import java.awt.*;
 
-public class ViewLabel extends JLabel {
-    public ViewLabel(String name) {
+public class Label extends JLabel {
+    public Label(String name) {
+        this(name, Font.PLAIN, 13);
+    }
+
+    public Label(String name, int style, int size) {
         super(name);
+        setFont(new Font("sans-serif", style, size));
     }
 
     public GridBagConstraints constraints(int row) {
