@@ -28,6 +28,7 @@ public class Control {
     public void requestLanding(Landing landing) {
         var q = landing.cause() == SpecialCause.None ? operations : emergencyLandings;
         q.add(landing);
+        db.add(landing);
     }
 
     public Optional<Operation> auth() {
