@@ -9,15 +9,15 @@ import view.components.Label;
 import models.*;
 
 public class AuthdOpView extends Frame {
-    private Operation op;
+    private Authorization auth;
     private JPanel panel;
 
     private int rows;
 
-    public AuthdOpView(Operation op) {
+    public AuthdOpView(Authorization auth) {
         super();
 
-        this.op = op;
+        this.auth = auth;
         this.rows = 1;
 
         withPanel(this::build);              
@@ -29,11 +29,7 @@ public class AuthdOpView extends Frame {
         panel.setBorder(new EmptyBorder(30, 44, 40, 44));
 
         addTitle("Aeropuerto Plaiaundi");
-
-        switch (op) {
-            case Landing landing -> display(landing);
-            case TakeOff takeOff -> display(takeOff);
-        }
+        display(auth);
     }
 
     private void addTitle(String text) {
@@ -49,18 +45,17 @@ public class AuthdOpView extends Frame {
         panel.add(rightLabel, rightLabel.constraints(rows++));
     }
 
-    private void display(Landing landing) {
-        addRow("Operación realizada: ", "Aterrizaje");
-        addRow("Código avión: ", landing.planeCode());
-        addRow("Hora operación: ", landing.time());
-        addRow("Procedencia: ", landing.origin());
-        addRow("Motivo: ", landing.cause().label());
-    }
+    private void display(Authorization auth) {
+        var op = auth.operation();
+        addRow("Operación relizada: ", op.kind());
+        addRow("Código avión: ", op.planeCode());
+        addRow("Hora operación: ", op.time());
 
-    private void display(TakeOff takeOff) {
-        addRow("Operación relizada: ", "Despegue");
-        addRow("Código avión: ", takeOff.planeCode());
-        addRow("Hora operación: ", takeOff.time());
-        addRow("Destino: ", takeOff.destination());
+        if (op.kind().equals("Aterrizaje")) {
+            addRow("Origen: ", op.city());
+            addRow("Motivo: ", ((Landing)op).cause().label());
+        }
+        else 
+            addRow("Destino: ", op.city());
     }
 }

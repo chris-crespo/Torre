@@ -7,4 +7,12 @@ public record Landing(String planeCode, LocalDateTime date, String origin, Speci
     public String time() {
         return String.format("%2d:%2d", date.getHour(), date.getMinute());
     }
+
+    public String kind() {
+        return "Aterrizaje";
+    }
+
+    public String city() {
+        return origin;
+    }
 }

@@ -1,12 +1,14 @@
 package app;
 
-import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.time.LocalDateTime;
 
 import view.*;
 import adt.*;
 import models.*;
 import data.Db;
+import utils.Result;
 
 public class Control {
     private Db db;
@@ -23,15 +25,24 @@ public class Control {
 
     public void requestTakeOff(TakeOff takeOff) {
         operations.add(takeOff);
+        db.insertOp(takeOff);
     }
 
     public void requestLanding(Landing landing) {
         var q = landing.cause() == SpecialCause.None ? operations : emergencyLandings;
         q.add(landing);
-        db.add(landing);
+        db.insertOp(landing);
     }
 
-    public Optional<Operation> auth() {
-        return emergencyLandings.next().or(operations::next);
+    public Result<List<Authorization>> getTodaysAuths() {
+        return db.fetchAuths();
+    }
+
+    public Optional<Authorization> auth() {
+        var auth = emergencyLandings.next().or(operations::next)
+            .map(op -> new Authorization(op, LocalDateTime.now()));
+
+        auth.ifPresent(db::insertAuth);
+        return auth;
     }
 }

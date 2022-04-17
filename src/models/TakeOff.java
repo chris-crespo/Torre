@@ -7,4 +7,16 @@ public record TakeOff(String planeCode, LocalDateTime date, String destination)
     public String time() {
         return String.format("%2d:%2d", date.getHour(), date.getMinute());
     }
+
+    public String kind() {
+        return "Despegue";
+    }
+
+    public String city() {
+        return destination;
+    }
+
+    public SpecialCause cause() {
+        return SpecialCause.None;
+    }
 }
