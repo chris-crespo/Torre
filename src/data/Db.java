@@ -118,10 +118,10 @@ public class Db {
 
     public Result<List<Authorization>> fetchAuths() {
         var query = """
-            select ops.plane, ops.kind, auths.op_date, ops.city, ops.cause, auths.auth_date
+            select ops.plane, kind, op_date, city, cause, auth_date
             from Operations ops join Auths auths
             on ops.plane = auths.plane and ops.date = auths.op_date
-            where substr(auths.op_date, 10) = date('now')""";
+            where substr(auths.op_date, 0, 11) = date('now')""";
         return Result.of(() -> fetch(query, this::mapAuth));
     }
 
