@@ -1,5 +1,6 @@
 .PHONY: all test clean
 
+SHELL=/usr/bin/bash
 sources = $(shell find src -name "*.java")
 files = $(shell find {src,test} -name "*.java")
 

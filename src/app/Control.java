@@ -23,14 +23,34 @@ public class Control {
         this.emergencyLandings = new Operations();
     }
 
+    private Operations getQueue(Landing landing) {
+        return landing.cause() == SpecialCause.None 
+            ? operations 
+            : emergencyLandings;
+    }
+
+    public Result<List<Operation>> sync() {
+        var ops = db.fetchOps();
+        ops.ifOk(res -> res.forEach(op -> {
+            switch (op.kind()) {
+                case "Aterrizaje" -> {
+                    var landing = (Landing) op;
+                    getQueue(landing).add(landing);
+                }
+                default -> operations.add((TakeOff) op);
+            };
+        }));
+
+        return ops;
+    }
+
     public void requestTakeOff(TakeOff takeOff) {
         operations.add(takeOff);
         db.insertOp(takeOff);
     }
 
     public void requestLanding(Landing landing) {
-        var q = landing.cause() == SpecialCause.None ? operations : emergencyLandings;
-        q.add(landing);
+        getQueue(landing).add(landing);
         db.insertOp(landing);
     }
 

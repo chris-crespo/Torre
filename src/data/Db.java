@@ -20,7 +20,7 @@ interface StatementPrep<T> {
 
 public class Db {
     private static Db instance;
-    private static String url = "jdbc:sqlite:test.db";
+    private static String url = "jdbc:sqlite:torre.db";
 
     private Connection connection;
 
@@ -80,6 +80,18 @@ public class Db {
         return new Authorization(op, date);
     }
 
+    private Operation mapOp(ResultSet rs) throws SQLException {
+        var plane = rs.getString(1);
+        var kind  = rs.getString(2);
+        var date  = LocalDateTime.parse(rs.getString(3));
+        var city  = rs.getString(4);
+
+        return switch (kind) {
+            case "Aterrizaje" -> new Landing(plane, date, city, SpecialCause.from(rs.getString(5)));
+            default -> new TakeOff(plane, date, city);
+        };
+    }
+
     private PreparedStatement prepareOpStatement(Operation operation, PreparedStatement statement) 
             throws SQLException {
         statement.setString(1, operation.planeCode());
@@ -114,6 +126,15 @@ public class Db {
 
     private <T> int insert(String query, T obj, StatementPrep<T> fn) throws SQLException {
         return fn.apply(obj, connection.prepareStatement(query)).executeUpdate();
+    }
+
+    public Result<List<Operation>> fetchOps() {
+        var query = """
+            select op.plane, op.kind, op.date, op.city, op.cause
+            from Operations op left join Auths auth
+            on op.plane = auth.plane and op.date = auth.op_date
+            where auth_date is null""";
+        return Result.of(() -> fetch(query, this::mapOp));
     }
 
     public Result<List<Authorization>> fetchAuths() {

@@ -1,18 +1,19 @@
-import view.Menu;
-import view.ConnectionFailure;
+import view.*;
 import app.Control;
 import data.Db;
 
 public class Main {
-    private static void run(Db db) {
+    private static void tryRun(Db db) {
         var control = new Control(db);
-        new Menu(control);
+        control.sync()
+            .ifOk(res -> new Menu(control))
+            .ifError(SyncFailure::new);
     }
 
     private static void setup(Db db) {
         db.setup()
-            .ifOk(b -> run(db))
-            .ifError(e -> System.out.println(e.getMessage()));
+            .ifOk(b -> tryRun(db))
+            .ifError(SetupFailure::new);
     }
 
     public static void main(String[] args) {
