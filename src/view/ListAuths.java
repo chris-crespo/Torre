@@ -5,12 +5,10 @@ import java.util.function.Consumer;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.Dimension;
+import java.awt.*;
 
 import view.components.*;
+import view.components.Label;
 
 import models.Authorization;
 
@@ -53,28 +51,34 @@ public class ListAuths extends Frame {
     }
 
     protected void build(JPanel panel) {
-        panel.setLayout(new GridBagLayout());
+        panel.setLayout(new BorderLayout(0, 0));
         panel.setBorder(new EmptyBorder(30, 44, 30, 44));
 
         var title = new Title("Autorizaciones del día");
-        panel.add(title, title.constraints()); 
+        panel.add(title, BorderLayout.NORTH); 
 
         if (auths.size() == 0) {
             var label = new Label("No se ha realizado ninguna autorización");
-            panel.add(label, label.constraints(1));
+            panel.add(label, BorderLayout.SOUTH);
         }
         else {
-            var subPanel = new JPanel();
-            subPanel.setLayout(new GridBagLayout());
+            var rows = auths.stream()
+                .map(Authorization::operation)
+                .map(op -> new String[] { 
+                    op.planeCode(), op.kind(), op.city(), op.time().toString()
+                })
+                .toArray(String[][]::new);
 
-            var constraints = new GridBagConstraints();
-            constraints.gridy = 1;
+            var cols = new String[] { "Avión", "Tipo", "Ciudad", "Hora" };
+            var table = new JTable(rows, cols);
+            var scroll = new JScrollPane();
 
-            var scroll = new JScrollPane(subPanel);
+            scroll.setPreferredSize(new Dimension(400, 200));
             
-            panel.add(scroll, constraints);
-            showHeader(subPanel);
-            auths.forEach(addAuth(subPanel));
+            scroll.setViewportView(table);
+            scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+            panel.add(scroll, BorderLayout.CENTER);
         }
     }
 }

@@ -16,8 +16,6 @@ public class Label extends JLabel {
     public GridBagConstraints constraints(int row) {
         var constraints = new GridBagConstraints();
 
-        constraints.weightx = 0.1;
-        constraints.gridwidth = 1;
         constraints.gridy = row;
         constraints.insets = new Insets(0, 0, 10, 10);
         constraints.anchor = GridBagConstraints.WEST;
